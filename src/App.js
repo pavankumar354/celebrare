@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import './App.css';
-import logo from './logo.jpeg';  // Make sure to add your logo image to the src directory
+import logo from './logo.jpeg'; // Ensure to add your logo image to the src directory
 
 const App = () => {
   const [textBoxes, setTextBoxes] = useState([]);
@@ -18,10 +18,12 @@ const App = () => {
       fontSize: 20,
       fontFamily: 'Arial',
       bold: false,
+      underline: false,
+      textAlign: 'left',
       x: 100,
       y: 100,
       width: 200,
-      height: 50,
+      height: 'auto',
       selected: false,
     };
     updateHistory([...textBoxes, newTextBox]);
@@ -119,7 +121,6 @@ const App = () => {
       </header>
 
       <div className="controls">
-        
         <button className="btn" onClick={undo} disabled={history.length === 0}>Undo</button>
         <button className="btn" onClick={redo} disabled={redoHistory.length === 0}>Redo</button>
       </div>
@@ -136,6 +137,8 @@ const App = () => {
               fontSize: `${box.fontSize}px`,
               fontFamily: box.fontFamily,
               fontWeight: box.bold ? 'bold' : 'normal',
+              textDecoration: box.underline ? 'underline' : 'none',
+              textAlign: box.textAlign,
               width: `${box.width}px`,
               height: `${box.height}px`,
               border: box.selected ? '1px solid #ccc' : 'none',
@@ -150,7 +153,7 @@ const App = () => {
       {selectedTextBox && (
         <div className="text-controls">
           <select
-            value={selectedTextBox.fontSize}
+           
             onChange={(e) => editTextBox('fontSize', parseInt(e.target.value))}
             className="input"
           >
@@ -161,7 +164,7 @@ const App = () => {
             <option value="30">30</option>
           </select>
           <select
-            value={selectedTextBox.fontFamily}
+         
             onChange={(e) => editTextBox('fontFamily', e.target.value)}
             className="input"
           >
@@ -169,14 +172,34 @@ const App = () => {
             <option value="Courier New">Courier New</option>
             <option value="Georgia">Georgia</option>
           </select>
+          <select
+           
+            onChange={(e) => editTextBox('textAlign', e.target.value)}
+            className="input"
+          >
+            <option value="left">Left</option>
+            <option value="center">Center</option>
+            <option value="right">Right</option>
+          </select>
+
           <button
             className={`btn bold-btn ${selectedTextBox.bold ? 'active' : ''}`}
             onClick={() => editTextBox('bold', !selectedTextBox.bold)}
           >
-            Bold
+            B
           </button>
+
+          <button
+            className={`btn underline-btn ${selectedTextBox.underline ? 'active' : ''}`}
+            onClick={() => editTextBox('underline', !selectedTextBox.underline)}
+          >
+            Underline
+          </button>
+
+          
         </div>
-      )}<button className="btn" onClick={addTextBox}>Add Text</button>
+      )}
+      <button className="btn1" onClick={addTextBox}>Add Text</button>
     </div>
   );
 };
